@@ -16,6 +16,8 @@ def main():
     try:
         run("iptables -F")
         run("iptables -X")
+        run("iptables -t nat -F")
+        run("iptables -t nat -X")
         run("iptables -P INPUT ACCEPT")
         run("iptables -P OUTPUT ACCEPT")
         run("iptables -P FORWARD ACCEPT")
