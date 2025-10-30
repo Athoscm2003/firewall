@@ -30,6 +30,15 @@ def configurar_firewall():
     run("iptables -A INPUT -i ens19 -j ACCEPT")
     # === FIM DAS REGRAS DE INPUT ===
 
+    # Permitir DNS (UDP porta 53)
+    run("iptables -A FORWARD -p udp --dport 53 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT")
+    run("iptables -A FORWARD -p udp --sport 53 -m state --state ESTABLISHED,RELATED -j ACCEPT")
+
+    # Permitir DNS (TCP porta 53, para fallback)
+    run("iptables -A FORWARD -p tcp --dport 53 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT")
+    run("iptables -A FORWARD -p tcp --sport 53 -m state --state ESTABLISHED,RELATED -j ACCEPT")
+
+
     # Permitir HTTP de saída e respostas
     run("iptables -A FORWARD -p tcp --dport 80 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT")
 
