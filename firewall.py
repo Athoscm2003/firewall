@@ -46,6 +46,10 @@ def configurar_firewall():
     run("iptables -A FORWARD -p tcp --dport 80 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT")
     run("iptables -A FORWARD -p tcp --sport 80 -m state --state ESTABLISHED,RELATED -j ACCEPT")
 
+    # Permitir HTTPS (TLS) de saída e respostas (Porta 443)
+    run("iptables -A FORWARD -p tcp --dport 443 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT")
+    run("iptables -A FORWARD -p tcp --sport 443 -m state --state ESTABLISHED,RELATED -j ACCEPT")
+
     run("iptables -A FORWARD -p icmp -o ens18 -j DROP")  # Bloquear ICMP externo
 
     run("iptables -A FORWARD -p icmp -i ens19 -o ens19 -j ACCEPT")  # Permitindo ICMP interno
