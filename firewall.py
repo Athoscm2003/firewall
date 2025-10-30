@@ -12,7 +12,7 @@ def configurar_firewall():
     run("iptables -X")
     run("iptables -t nat -F") # Limpa a tabela NAT também
     run("iptables -t nat -X") # Limpa a tabela NAT também
-    run("iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE")
+    run("iptables -t nat -A POSTROUTING -o ens18 -j MASQUERADE")
 
     # Política padrão: bloquear tudo
     run("iptables -P INPUT DROP")
